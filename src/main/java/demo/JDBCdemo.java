@@ -2,15 +2,21 @@ package demo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JDBCdemo {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException{
 		// TODO Auto-generated method stub
-
+		readRecords();
+		writeRecords();
+		//writeRecordsUsingVariable();
+	}
+	
+	public static void readRecords() throws SQLException{
 		//Use connection Interface To connect With database
 		String url ="jdbc:mysql://localhost:3306/demo";
 		String username = "root";
@@ -36,7 +42,65 @@ public class JDBCdemo {
 			System.out.println("Age : " +rs.getInt(3));
 			System.out.println("");
 		}
-
+		
+		con.close();
+	}
+	
+	   //InsertData Using Prepared Statement
+		public static void writeRecords() throws SQLException{
+			
+			String url ="jdbc:mysql://localhost:3306/demo";
+			String username = "root";
+			String password = "rootuser";
+			Connection con = DriverManager.getConnection(url, username, password);
+		    
+		    //Directly Include the value
+		    //String query = "insert into employee values(3,'Aishu',21)";
+		    int id = 5;
+		    String name = "Vicky";
+		    int age = 28;
+		    
+	        //Include value using variable
+		    String query = "insert into employee values(?,?,?)";
+		    
+			//create Statement for the Query Execution
+		    PreparedStatement pst = con.prepareStatement(query);
+		    pst.setInt(1, id);
+		    pst.setString(2, name);
+		    pst.setInt(3, age);
+		    
+		    //It update the Query ANd return the affected rows
+		    int rows = pst.executeUpdate();
+		    
+		    System.out.println("Rows Affected " +rows);
+			
+		}
+		
+	//InsertData
+	public static void writeRecordsUsingVariable() throws SQLException{
+		
+		String url ="jdbc:mysql://localhost:3306/demo";
+		String username = "root";
+		String password = "rootuser";
+		Connection con = DriverManager.getConnection(url, username, password);
+		
+		//create Statement for the Query Execution
+	    Statement st = con.createStatement();
+	    
+	    //Directly Include the value
+	    //String query = "insert into employee values(3,'Aishu',21)";
+	    int id = 4;
+	    String name = "Dhanush";
+	    int age = 30;
+	    
+        //Include value using variable
+	    String query = "insert into employee values(+" +id +",'" +name +"'," +age +")";
+	    
+	    //It update the Query ANd return the affected rows
+	    int rows = st.executeUpdate(query);
+	    
+	    System.out.println("Rows Affected " +rows);
+		
 	}
 
 }
