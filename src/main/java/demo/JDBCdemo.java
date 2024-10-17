@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 
 public class JDBCdemo {
 
@@ -73,7 +74,7 @@ public class JDBCdemo {
 		System.out.println("------End----------");
 		
 		
-		//to send values
+		//get particular employee details
 		int empId = 1;
 		System.out.println("Details of Particular Employee of Id " +empId);
 		CallableStatement cst2 = con.prepareCall("{call getEmployeeDetailsById(?)}");
@@ -85,6 +86,18 @@ public class JDBCdemo {
 		System.out.println("Name : " +rs1.getString(2));
 		System.out.println("Age : " +rs1.getInt(3));
 		System.out.println("");
+		
+		System.out.println("------End----------");
+		
+		//Get Name By Using Employee Id - stored Procedure In and out
+		System.out.println("Name of the Employee of Id " +empId);
+		CallableStatement cst3 = con.prepareCall("{call getNameByEmployeeId(?,?)}");
+		cst3.setInt(1, empId);
+		cst3.registerOutParameter(2, Types.VARCHAR);
+		//Because we pass Parameter
+		cst3.executeUpdate();
+		//Because its an secondParameter here getEmployeeDetailsById(?,?)
+		System.out.println("Name: " +cst3.getString(2));
 		
 	}
 	   //InsertData Using Prepared Statement
