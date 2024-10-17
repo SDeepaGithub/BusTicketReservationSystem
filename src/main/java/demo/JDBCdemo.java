@@ -12,8 +12,10 @@ public class JDBCdemo {
 	public static void main(String[] args) throws SQLException{
 		// TODO Auto-generated method stub
 		readRecords();
-		writeRecords();
+		//writeRecords();
 		//writeRecordsUsingVariable();
+		
+		deleteRecords();
 	}
 	
 	public static void readRecords() throws SQLException{
@@ -100,6 +102,28 @@ public class JDBCdemo {
 	    int rows = st.executeUpdate(query);
 	    
 	    System.out.println("Rows Affected " +rows);
+		
+	}
+	
+	public static void deleteRecords() throws SQLException{
+		
+		String url ="jdbc:mysql://localhost:3306/demo";
+		String username = "root";
+		String password = "rootuser";
+		Connection con = DriverManager.getConnection(url, username, password);
+		
+		//create Statement for the Query Execution
+	    Statement st = con.createStatement();
+
+	    int id = 5;
+	    
+        //Include value using variable
+	    String query = "delete from employee where employeeId =" +id;
+	    
+	    //It update the Query ANd return the affected rows
+	    int rows = st.executeUpdate(query);
+	    
+	    System.out.println("Deleted Rows - " +rows +" of Id-"+id);
 		
 	}
 
