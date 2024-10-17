@@ -1,5 +1,6 @@
 package demo;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,12 +12,12 @@ public class JDBCdemo {
 
 	public static void main(String[] args) throws SQLException{
 		// TODO Auto-generated method stub
-		readRecords();
+		//readRecords();
+		readRecordsUsingStoredProcedure();
 		//writeRecords();
-		//writeRecordsUsingVariable();
-		
+		//writeRecordsUsingVariable();	
 		//deleteRecords();
-		updateRecords();
+		//updateRecords();
 	}
 	
 	public static void readRecords() throws SQLException{
@@ -52,6 +53,40 @@ public class JDBCdemo {
 		con.close();
 	}
 	
+	public static void readRecordsUsingStoredProcedure() throws SQLException{
+		System.out.println("---------List of Records----------");
+		//Use connection Interface To connect With database
+		String url ="jdbc:mysql://localhost:3306/demo";
+		String username = "root";
+		String password = "rootuser";
+		Connection con = DriverManager.getConnection(url, username, password);
+		CallableStatement cst = con.prepareCall("{call getEmployeeDetails()}");
+		ResultSet rs = cst.executeQuery();
+		
+		while(rs.next()) {
+			System.out.println("ID : " +rs.getInt(1));
+			System.out.println("Name : " +rs.getString(2));
+			System.out.println("Age : " +rs.getInt(3));
+			System.out.println("");
+		}
+		
+		System.out.println("------End----------");
+		
+		
+		//to send values
+		int empId = 1;
+		System.out.println("Details of Particular Employee of Id " +empId);
+		CallableStatement cst2 = con.prepareCall("{call getEmployeeDetailsById(?)}");
+		cst2.setInt(1, empId);
+		ResultSet rs1 = cst2.executeQuery();
+		
+		rs1.next();
+		System.out.println("ID : " +rs1.getInt(1));
+		System.out.println("Name : " +rs1.getString(2));
+		System.out.println("Age : " +rs1.getInt(3));
+		System.out.println("");
+		
+	}
 	   //InsertData Using Prepared Statement
 		public static void writeRecords() throws SQLException{
 			
