@@ -15,10 +15,12 @@ public class JDBCdemo {
 		//writeRecords();
 		//writeRecordsUsingVariable();
 		
-		deleteRecords();
+		//deleteRecords();
+		updateRecords();
 	}
 	
 	public static void readRecords() throws SQLException{
+		System.out.println("---------List of Records----------");
 		//Use connection Interface To connect With database
 		String url ="jdbc:mysql://localhost:3306/demo";
 		String username = "root";
@@ -44,6 +46,8 @@ public class JDBCdemo {
 			System.out.println("Age : " +rs.getInt(3));
 			System.out.println("");
 		}
+		
+		System.out.println("------End----------");
 		
 		con.close();
 	}
@@ -124,6 +128,31 @@ public class JDBCdemo {
 	    int rows = st.executeUpdate(query);
 	    
 	    System.out.println("Deleted Rows - " +rows +" of Id-"+id);
+		
+	    readRecords();
+	}
+	
+	public static void updateRecords() throws SQLException{
+		
+		String url ="jdbc:mysql://localhost:3306/demo";
+		String username = "root";
+		String password = "rootuser";
+		Connection con = DriverManager.getConnection(url, username, password);
+		
+		//create Statement for the Query Execution
+	    Statement st = con.createStatement();
+
+	    int id = 2;
+	    
+        //Include value using variable
+	    String query = "update employee set age = 25 where employeeId =" +id;
+	    
+	    //It update the Query ANd return the affected rows
+	    int rows = st.executeUpdate(query);
+	    
+	    System.out.println("Rows Updated - " +rows +" of Id-"+id);
+	    
+	    readRecords();
 		
 	}
 
