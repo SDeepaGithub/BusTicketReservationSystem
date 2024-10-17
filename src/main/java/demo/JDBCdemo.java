@@ -13,12 +13,13 @@ public class JDBCdemo {
 
 	public static void main(String[] args) throws SQLException{
 		// TODO Auto-generated method stub
-		//readRecords();
-		readRecordsUsingStoredProcedure();
+		readRecords();
+		//readRecordsUsingStoredProcedure();
 		//writeRecords();
 		//writeRecordsUsingVariable();	
 		//deleteRecords();
 		//updateRecords();
+		commitDemo();
 	}
 	
 	public static void readRecords() throws SQLException{
@@ -204,4 +205,24 @@ public class JDBCdemo {
 		
 	}
 
+	public static void commitDemo() throws SQLException{
+		
+		//commit - to Execute Multiple Query at the same time
+		String url ="jdbc:mysql://localhost:3306/demo";
+		String username = "root";
+		String password = "rootuser";
+		Connection con = DriverManager.getConnection(url, username, password);
+		con.setAutoCommit(false);
+		Statement st = con.createStatement();
+		
+		String query1 = "update employee set age = 20 where employeeId = 2";
+		String query2 = "update employee set age = 35 where employeeId = 3";
+		
+		st.executeUpdate(query1);
+		st.executeUpdate(query2);
+		
+		con.commit();
+		
+		readRecords();
+	}
 }
