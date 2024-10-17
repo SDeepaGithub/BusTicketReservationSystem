@@ -1,4 +1,4 @@
-package busReservationWithoutJDBC;
+package busReservationSystem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

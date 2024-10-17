@@ -1,4 +1,4 @@
-package busReservationWithoutJDBC;
+package busReservationSystem;
 
 public class Bus {
 

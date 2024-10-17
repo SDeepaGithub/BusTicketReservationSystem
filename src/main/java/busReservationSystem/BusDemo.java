@@ -1,4 +1,4 @@
-package busReservationWithoutJDBC;
+package busReservationSystem;
 
 import java.util.ArrayList;
 import java.util.Scanner;
