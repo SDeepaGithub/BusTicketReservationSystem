@@ -19,7 +19,8 @@ public class JDBCdemo {
 		//writeRecordsUsingVariable();	
 		//deleteRecords();
 		//updateRecords();
-		commitDemo();
+		//commitDemo();
+		batchDemo();
 	}
 	
 	public static void readRecords() throws SQLException{
@@ -224,5 +225,25 @@ public class JDBCdemo {
 		con.commit();
 		
 		readRecords();
+	}
+	
+	public static void batchDemo() throws SQLException{
+		
+		String url ="jdbc:mysql://localhost:3306/demo";
+		String username = "root";
+		String password = "rootuser";
+		Connection con = DriverManager.getConnection(url, username, password);
+		
+		String query1 = "update employee set name = 'Divya' where employeeId = 2";
+		String query2 = "update employee set name = 'Preetha' where employeeId = 3";
+		
+		Statement st = con.createStatement();
+		st.addBatch(query1);
+		st.addBatch(query2);
+		
+		st.executeBatch();
+		
+		readRecords();
+		
 	}
 }
