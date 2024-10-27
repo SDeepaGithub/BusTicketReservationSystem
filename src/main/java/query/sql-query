@@ -1,0 +1,28 @@
+create database busreservation;
+
+CREATE TABLE bus (
+    busNo INT PRIMARY KEY AUTO_INCREMENT,
+    capacity INT NOT NULL,
+    ac boolean
+);
+
+
+
+Insert QUery
+
+INSERT INTO `busreservation`.`bus` (`busNo`, `capacity`, `ac`) VALUES ('1', '2', '1');
+INSERT INTO `busreservation`.`bus` (`busNo`, `capacity`, `ac`) VALUES ('2', '10', '1');
+INSERT INTO `busreservation`.`bus` (`busNo`, `capacity`, `ac`) VALUES ('3', '20', '1');
+INSERT INTO `busreservation`.`bus` (`busNo`, `capacity`, `ac`) VALUES ('4', '12', '0');
+INSERT INTO `busreservation`.`bus` (`busNo`, `capacity`, `ac`) VALUES ('5', '45', '0');
+INSERT INTO `busreservation`.`bus` (`busNo`, `capacity`, `ac`) VALUES ('6', '30', '0');
+
+
+--------------------------------Booking--------------------------
+
+CREATE TABLE booking (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    bus_No INT,
+    passenger_name varchar(100),
+    travel_date date
+);
