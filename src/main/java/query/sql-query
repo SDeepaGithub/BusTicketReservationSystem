@@ -18,6 +18,7 @@ INSERT INTO `busreservation`.`bus` (`busNo`, `capacity`, `ac`) VALUES ('5', '45'
 INSERT INTO `busreservation`.`bus` (`busNo`, `capacity`, `ac`) VALUES ('6', '30', '0');
 
 
+
 --------------------------------Booking--------------------------
 
 CREATE TABLE booking (
